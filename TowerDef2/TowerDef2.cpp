@@ -1,5 +1,6 @@
 // Tower Defence.cpp: определяет точку входа для консольного приложения.
 //
+
 #include "stdafx.h"
 #include "iostream"
 #include <Windows.h>
@@ -13,7 +14,10 @@
 #pragma comment (lib, "glaux.lib")
 using namespace std ;
 
-AUX_RGBImageRec *MyImage,*Towerr,*Monster,*Road,*Castle,*Bullet;
+AUX_RGBImageRec *MyImage,*Towerr,*Monster,*Road,*Castle,*Bullet,*Boom;
+
+int argc1;
+char **argv1;	
 
 void TextOut(int x,int y,char *string); 
 void Fire(); 
@@ -25,16 +29,18 @@ char str[10] ;
 
 int E  , n , n1 = 0 , l = 0 , EE = 20 , Bu ; // переменные для определения количества башен , мобов и т.д. n и n1 - это задержки стрельбы и появления мобов
 
-int way[20] , step[51] , R[500] ;   // переменные нужные для довоги и определения пути монстров 
+int way[20] , step[51] , R[500] ;   // переменные нужные для дороги и определения пути монстров 
 
 int PriceOfTower = 50;
 int Money = 50 ; 
+
+bool bo = FALSE ;
 
 int N = 1000,M = 400;		// количество клеток 
 int Scale = 1;	// сторона клетки 
 int w = Scale*N;	// ширина
 int h = Scale*M;	// высота
-
+bool start_ok=0;
 int Pass = 0; // сколько мобов прошло 
 
 
@@ -46,7 +52,8 @@ struct
 	double k ;
 	double b ;
 	bool Si ;
-	int numb ; 
+	int target ; 
+	int be ;
 }   s[500], m[500] , bu[500000] ;
 
 //вспомогательная функция, создаёт прозрачность (альфа-канал)
@@ -203,7 +210,6 @@ void Tower()
 void display()
 {
 
-
 	int y , z , v ;
 	glClear(GL_COLOR_BUFFER_BIT);
 
@@ -227,11 +233,11 @@ void display()
 	itoa(50,str,10);
 	TextOut(w-80,h-100,str);
 
-	TextOut(w-220,h-150,"( To Buy Tower ");
-	TextOut(w-200,h-170,"press Num3 )");
+	TextOut(w-220,h-150," To Buy Tower ");
+	TextOut(w-200,h-170,"press Num3");
 
-	TextOut(w-220,h-200,"( To move tower ");
-	TextOut(w-200,h-220,"use Up,Down... )");
+	TextOut(w-220,h-200,"To move tower use ");
+	TextOut(w-200,h-220,"arrows");
 	
 	TextOut(w-220,h-250,"Monster passed:");
 	itoa(Pass,str,10);
@@ -264,6 +270,7 @@ void KeyboardEvent(int key, int a, int b)
 	case 103 :   m[l].y =	m[l].y - 5  ; break;
 	}
 }	 
+
 //  определение движение врагов ( идут по дороге взятой из файла ) 
 void WayOfCreeps()
 {
@@ -404,25 +411,38 @@ void Fire2()
 					{
 						n1 = 0 ;
 					Bu ++ ;
-					bu[Bu].x = m[q].x ;
-					bu[Bu].y = m[q].y ;
-					bu[Bu].numb = K ;
-					
+					bu[Bu].x = m[q].x + 33;
+					bu[Bu].y = m[q].y + 30;
+					bu[Bu].target = K ;
+					bu[Bu].be = 1 ;
 					if (((s[K].x - m[q].x) != 0 )&&( (s[K].y - m[q].y) != 0 ))
 					{
 						if ( s[K].x < m[q].x )
 							bu[Bu].Si = false ;
 						else 
 							bu[Bu].Si = true ;
-
-						bu[Bu].k = (s[K].y - m[q].y)/(s[K].x - m[q].x);
-						bu[Bu].b = bu[Bu].y - bu[Bu].x * bu[Bu].k ;
 					}
 
 					s[K].hp = s[K].hp - m[0].hp ;
 
 					if ( s[K].hp <= 0)
+					{
+
 						Money = Money + 10 ;
+
+						glEnable(GL_ALPHA_TEST);																 
+						glAlphaFunc(GL_NOTEQUAL,0);  
+
+						glRasterPos2d(s[K].x,s[K].y);
+						glDrawPixels(Boom->sizeX, Boom->sizeY, GL_RGBA, GL_UNSIGNED_BYTE, Boom->data); 	
+
+						glFlush();
+
+						glDisable(GL_ALPHA_TEST); 
+
+
+					}
+
 					}
 					n1++ ; 
 						
@@ -437,21 +457,47 @@ void Fire2()
 
 void Bullett()
 {
-	
+	long double needed ;
+
 	glEnable(GL_ALPHA_TEST);																 
     glAlphaFunc(GL_NOTEQUAL,0);  
 
 	for ( int i = 0 ; i < Bu ; i ++ )
 	{
-		if ( bu[i].Si == true )
-			bu[i].x = bu[i].x + 5 ;
-		if ( bu[i].Si == false )
-			bu[i].x = bu[i].x - 5 ;
-
-		bu[i].y = bu[i].k * bu[i].x + bu[i].b;
-
-		glRasterPos2d(bu[i].x,bu[i].y);
-		glDrawPixels(Bullet->sizeX, Bullet->sizeY, GL_RGBA, GL_UNSIGNED_BYTE, Bullet->data);  
+		if (bu[i].be)
+		{
+			if (fabs(s[bu[i].target].x +8 - bu[i].x) > 20)
+			{
+				bu[i].k = (s[bu[i].target].y +8 - bu[i].y)/(s[bu[i].target].x +8 - bu[i].x);
+				bu[i].b = bu[i].y - bu[i].x * bu[i].k ;
+				if ( bu[i].Si == true )
+					bu[i].x = bu[i].x + 5 ;
+				if ( bu[i].Si == false )
+					bu[i].x = bu[i].x - 5 ;
+				bu[i].y = bu[i].k * bu[i].x + bu[i].b;
+				needed = sqrt ((s[bu[i].target].y +8 - bu[i].y)*(s[bu[i].target].y +8 - bu[i].y) + (s[bu[i].target].x +8 - bu[i].x)*(s[bu[i].target].x +8 - bu[i].x));
+			}
+			else
+			{
+				if ((s[bu[i].target].y +8 - bu[i].y)>0)
+					bu[i].y += 5 ;
+				else
+					bu[i].y -= 5 ;
+				if ( s[bu[i].target].x < bu[i].x )
+					bu[i].x = bu[i].x - 3 ;
+				else 
+					bu[i].x = bu[i].x + 3 ;
+				needed = sqrt ((s[bu[i].target].y +8 - bu[i].y)*(s[bu[i].target].y +8 - bu[i].y));
+			}
+			
+			if (needed<8)
+				bu[i].be =0;
+			else
+			{
+				glRasterPos2d(bu[i].x,bu[i].y);
+				glDrawPixels(Bullet->sizeX, Bullet->sizeY, GL_RGBA, GL_UNSIGNED_BYTE, Bullet->data);
+			}
+		}
 	}
 
 	glDisable(GL_ALPHA_TEST); 
@@ -468,6 +514,8 @@ void timer (int = 0)
 
 int main(int argc, char **argv)	
 {
+	argc1 = argc ;
+	argv1 = argv ; 
 	for (int i = 0 ; i <= EE ;  i++ ) // определяем начальное положение врагов и задаем их жизни 
 	{
 		s[i].x = 0 ;
@@ -492,11 +540,14 @@ int main(int argc, char **argv)
 	SetAlpha(Towerr);
 	Monster  = auxDIBImageLoad("Monster1.bmp");
 	SetAlpha(Monster);
+	Boom  = auxDIBImageLoad("Boom.bmp");
+	SetAlpha(Boom);
 	Road  = auxDIBImageLoad("doroga.bmp");
 	Castle  = auxDIBImageLoad("Castle.bmp");
 	SetAlpha(Castle);
 	Bullet  = auxDIBImageLoad("Bullet.bmp");
 	SetAlpha(Bullet);
+	
 
 	glutInit(&argc, argv);
 	glutInitDisplayMode (GLUT_SINGLE | GLUT_RGB );
