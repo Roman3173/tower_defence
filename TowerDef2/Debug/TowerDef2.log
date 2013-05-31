@@ -1,0 +1,21 @@
+﻿Построение начато 31.05.2013 8:33:32.
+     1>Проект "D:\git\git\TowerDef2\TowerDef2\TowerDef2.vcxproj" в узле 2 (целевые объекты build).
+     1>InitializeBuildStatus:
+         Создание "Debug\TowerDef2.unsuccessfulbuild", так как было задано "AlwaysCreate".
+       ClCompile:
+         Для всех выходных данных обновления не требуется.
+         Для всех выходных данных обновления не требуется.
+       ManifestResourceCompile:
+         Для всех выходных данных обновления не требуется.
+       Link:
+         Для всех выходных данных обновления не требуется.
+       Manifest:
+         Для всех выходных данных обновления не требуется.
+       FinalizeBuildStatus:
+         Файл "Debug\TowerDef2.unsuccessfulbuild" удаляется.
+         Обращение к "Debug\TowerDef2.lastbuildstate".
+     1>Построение проекта "D:\git\git\TowerDef2\TowerDef2\TowerDef2.vcxproj" завершено (целевые объекты build).
+
+Построение успешно завершено.
+
+Затраченное время: 00:00:00.09
