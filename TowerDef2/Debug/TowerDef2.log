@@ -1,39 +1,21 @@
-﻿Построение начато 31.05.2013 10:32:32.
-     1>Проект "D:\git\tower_defence\TowerDef2\TowerDef2.vcxproj" в узле 2 (целевые объекты build).
+﻿Построение начато 31.05.2013 10:23:24.
+     1>Проект "C:\Users\Роман\Documents\Visual Studio 2010\Projects\TowerDef2\TowerDef2\TowerDef2.vcxproj" в узле 2 (целевые объекты build).
      1>InitializeBuildStatus:
          Создание "Debug\TowerDef2.unsuccessfulbuild", так как было задано "AlwaysCreate".
        ClCompile:
          Для всех выходных данных обновления не требуется.
-         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"StdAfx.h" /Fp"Debug\TowerDef2.pch" /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt TowerDef2.cpp
-         TowerDef2.cpp
-     1>d:\git\tower_defence\towerdef2\towerdef2.cpp(82): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(234): см. объявление "fopen"
-     1>d:\git\tower_defence\towerdef2\towerdef2.cpp(227): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _itoa. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdlib.h(867): см. объявление "itoa"
-     1>d:\git\tower_defence\towerdef2\towerdef2.cpp(233): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _itoa. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdlib.h(867): см. объявление "itoa"
-     1>d:\git\tower_defence\towerdef2\towerdef2.cpp(243): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _itoa. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdlib.h(867): см. объявление "itoa"
-     1>d:\git\tower_defence\towerdef2\towerdef2.cpp(213): warning C4101: v: неиспользованная локальная переменная
-     1>d:\git\tower_defence\towerdef2\towerdef2.cpp(213): warning C4101: y: неиспользованная локальная переменная
-     1>d:\git\tower_defence\towerdef2\towerdef2.cpp(213): warning C4101: z: неиспользованная локальная переменная
+         Для всех выходных данных обновления не требуется.
        ManifestResourceCompile:
          Для всех выходных данных обновления не требуется.
        Link:
-         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\git\tower_defence\Debug\TowerDef2.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\TowerDef2.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"D:\git\tower_defence\Debug\TowerDef2.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\git\tower_defence\Debug\TowerDef2.lib" /MACHINE:X86 Debug\TowerDef2.exe.embed.manifest.res
-         Debug\stdafx.obj
-         Debug\TowerDef2.obj
+         Для всех выходных данных обновления не требуется.
        Manifest:
-         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /out:"Debug\TowerDef2.exe.embed.manifest" /manifest Debug\TowerDef2.exe.intermediate.manifest
          Для всех выходных данных обновления не требуется.
-       LinkEmbedManifest:
-         Для всех выходных данных обновления не требуется.
-         TowerDef2.vcxproj -> D:\git\tower_defence\Debug\TowerDef2.exe
        FinalizeBuildStatus:
          Файл "Debug\TowerDef2.unsuccessfulbuild" удаляется.
          Обращение к "Debug\TowerDef2.lastbuildstate".
-     1>Построение проекта "D:\git\tower_defence\TowerDef2\TowerDef2.vcxproj" завершено (целевые объекты build).
+     1>Построение проекта "C:\Users\Роман\Documents\Visual Studio 2010\Projects\TowerDef2\TowerDef2\TowerDef2.vcxproj" завершено (целевые объекты build).
 
 Построение успешно завершено.
 
-Затраченное время: 00:00:01.64
+Затраченное время: 00:00:00.12

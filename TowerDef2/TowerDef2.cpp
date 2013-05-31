@@ -210,6 +210,19 @@ void Tower()
 void display()
 {
 
+	if (!start_ok)
+	{
+		glClear(GL_COLOR_BUFFER_BIT);
+
+		glClearColor(0.0,1.0,1.6,1.0); 
+
+		glColor3f( 0.0,0.0,0.0);
+		TextOut(w/2-100,h/2,"Press Enter to start Game ");
+
+		glFlush();
+	}
+	else
+	{
 	int y , z , v ;
 	glClear(GL_COLOR_BUFFER_BIT);
 
@@ -234,10 +247,10 @@ void display()
 	TextOut(w-80,h-100,str);
 
 	TextOut(w-220,h-150," To Buy Tower ");
-	TextOut(w-200,h-170,"press Num3");
+	TextOut(w-200,h-170,"press Num3 or B ");
 
 	TextOut(w-220,h-200,"To move tower use ");
-	TextOut(w-200,h-220,"arrows");
+	TextOut(w-200,h-220,"arrows or SWAD ");
 	
 	TextOut(w-220,h-250,"Monster passed:");
 	itoa(Pass,str,10);
@@ -245,6 +258,7 @@ void display()
 
 
 	glFlush();
+	}
 }	  
 // покупаем башню 
 void NewTower()
@@ -256,6 +270,10 @@ void NewTower()
  // задаем действия для клавиатуры 
 void KeyboardEvent(int key, int a, int b)
 {   
+	if (!start_ok){
+		if(key==108)
+			start_ok=1;}
+	else
 	switch(key)
 	{
 	case 105 :	 if ( Money >= PriceOfTower )
@@ -271,6 +289,26 @@ void KeyboardEvent(int key, int a, int b)
 	}
 }	 
 
+void MyKeyboardEvent(unsigned char key, int a, int b)
+{
+	if (!start_ok){
+		if(key==13)
+			start_ok=1;}
+	else
+	switch(key)
+	{
+	case 'b' :	 if ( Money >= PriceOfTower )
+				 {
+					NewTower() ;
+					Money = Money - PriceOfTower ; 
+				 }
+				break;
+	case 'w' : 	 m[l].y =   m[l].y + 5  ; break;
+	case 'd' :   m[l].x =   m[l].x + 5  ; break;
+	case 'a' :   m[l].x =	m[l].x - 5  ; break;
+	case 's' :   m[l].y =	m[l].y - 5  ; break;
+	}
+}
 //  определение движение врагов ( идут по дороге взятой из файла ) 
 void WayOfCreeps()
 {
@@ -512,6 +550,14 @@ void timer (int = 0)
 	glutTimerFunc(10,timer,0) ;
 }		 
 
+void start (int = 0)
+{
+	if (!start_ok)
+		glutTimerFunc(10,start,0) ;
+	else
+		glutTimerFunc(10,timer,0) ;
+}	
+
 int main(int argc, char **argv)	
 {
 	argc1 = argc ;
@@ -560,7 +606,8 @@ int main(int argc, char **argv)
 
 	glutDisplayFunc (display);
 	glutSpecialFunc(KeyboardEvent);
-	glutTimerFunc(10 , timer,0);
+	glutKeyboardFunc(MyKeyboardEvent);
+	glutTimerFunc(10 , start,0);
 
 	glutMainLoop();
 
